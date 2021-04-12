@@ -23,16 +23,23 @@ function optionChanged(inputValue) {
     let samples = data.samples;
     const filterSub = (samples) => samples.id == inputValue;
     let filteredSub = samples.filter(filterSub);
+    let hover = filteredSub.map(sub =>sub.otu_labels)
+    hover = hover [0]
+    hover10 = hover.slice(0, 10)
     let value = filteredSub.map(sub => sub.sample_values);
     value = value[0]
-    value = value.slice(0, 10)
+    value10 = value.slice(0, 10)
     let label = filteredSub.map(sub => sub.otu_ids);
     label = label[0]
-    label = label.slice(0, 10)
+    label = label.map(el => 'OTU ' + el)
+    label10 = label.slice(0, 10)
+    
     let trace = {
-      y: value,
-      x: label,
-      type: "bar"
+      x: value10.reverse(),
+      y: label10.reverse(),
+      text: hover10.reverse(),
+      type: "bar",
+      orientation: 'h'
     }
     let plotData = [trace]
     console.log(value)
