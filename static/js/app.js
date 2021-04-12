@@ -31,8 +31,8 @@ function optionChanged(inputValue) {
     value10 = value.slice(0, 10)
     let label = filteredSub.map(sub => sub.otu_ids);
     label = label[0]
-    label = label.map(el => 'OTU ' + el)
-    label10 = label.slice(0, 10)
+    labels = label.map(el => 'OTU ' + el)
+    label10 = labels.slice(0, 10)
     
     let trace = {
       x: value10.reverse(),
@@ -45,11 +45,35 @@ function optionChanged(inputValue) {
     console.log(value)
     console.log(label)
     // console.log()
-    var layout = {
-      title: "B"
-    };
+    let layout = {};
     Plotly.newPlot("bar", plotData, layout);
-    console.log(trace)
+
+    const bubs =[{
+      x: label,
+      y: value,
+      text: hover,
+      mode:'markers',
+      marker: {
+        color: label,
+        size: value
+      }
+    }]
+    let bLayout = {
+      xaxis: {title: "OTU ID"}
+    };
+
+    Plotly.newPlot("bubble", bubs, bLayout)
+    // console.log(trace)
+    let meta = data.metadata;
+    let filterMeta = (meta) => meta.id == inputValue;
+    let subMeta = meta.filter(filterMeta);
+    subMeta = subMeta[0]
+    console.log(subMeta)
+    for (const thing in subMeta){
+      d3.select(".panel-body").text(`${thing}: ${subMeta[thing]}`);
+    }
+    // d3.select(".panel-body").text(JSON.stringify(subMeta, null, 2));
+
 })
 }
 const placeholder= 940
