@@ -70,7 +70,7 @@ function optionChanged(inputValue) {
     subMeta = subMeta[0]
     console.log(subMeta)
     for (const thing in subMeta){
-      d3.select(".panel-body").text(`${thing}: ${subMeta[thing]}`);
+      d3.select(".panel-body").text(`${thing}: ${subMeta[thing]} ${br}`);
     }
     // d3.select(".panel-body").text(JSON.stringify(subMeta, null, 2));
 
