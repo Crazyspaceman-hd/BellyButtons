@@ -23,7 +23,15 @@ function optionChanged(inputValue) {
     let samples = data.samples;
     const filterSub = (samples) => samples.id == inputValue;
     let filteredSub = samples.filter(filterSub);
-    console.log(filteredSub);
+    let doubleFilter= unpack(samples.filter(filterSub));
+    console.log(doubleFilter);
+    let value = (filteredSub)
+    let plotData = [{
+      values: filteredSub.sample_values,
+      labels: filteredSub.otu_ids,
+      type: "bar"
+    }]
+    console.log(value)
 })
 }
 const placeholder= 940
@@ -42,7 +50,7 @@ let form=d3.select("#selDataset")
 
 
 
-    function unpack(rows, index) {
+  function unpack(rows, index) {
     return rows.map(function(row) {
       return row[index];
     });
