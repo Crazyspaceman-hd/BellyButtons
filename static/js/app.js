@@ -1,7 +1,7 @@
 d3.json('samples.json').then(data => {
     console.log(data);
     let samples = data.samples;
-    console.log(samples);
+    // console.log(samples);
     d3.select("#selDataset")
         .selectAll("option")
         .data(data.samples)
@@ -23,15 +23,26 @@ function optionChanged(inputValue) {
     let samples = data.samples;
     const filterSub = (samples) => samples.id == inputValue;
     let filteredSub = samples.filter(filterSub);
-    let doubleFilter= unpack(samples.filter(filterSub));
-    console.log(doubleFilter);
-    let value = (filteredSub)
-    let plotData = [{
-      values: filteredSub.sample_values,
-      labels: filteredSub.otu_ids,
+    let value = filteredSub.map(sub => sub.sample_values);
+    value = value[0]
+    value = value.slice(0, 10)
+    let label = filteredSub.map(sub => sub.otu_ids);
+    label = label[0]
+    label = label.slice(0, 10)
+    let trace = {
+      y: value,
+      x: label,
       type: "bar"
-    }]
+    }
+    let plotData = [trace]
     console.log(value)
+    console.log(label)
+    // console.log()
+    var layout = {
+      title: "B"
+    };
+    Plotly.newPlot("bar", plotData, layout);
+    console.log(trace)
 })
 }
 const placeholder= 940
