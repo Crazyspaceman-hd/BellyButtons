@@ -1,7 +1,4 @@
 d3.json('samples.json').then(data => {
-    console.log(data);
-    let samples = data.samples;
-    // console.log(samples);
     d3.select("#selDataset")
         .selectAll("option")
         .data(data.samples)
@@ -10,14 +7,6 @@ d3.json('samples.json').then(data => {
         .text(data => data.id)
     })
 
-
-
-
-// function createCharts(dataset, value) {
-//   console.log(dataset);
-//   console.log(value);
-//   // Create Charts Here!
-// }
 function optionChanged(inputValue) {
   d3.json('samples.json').then(data => {
     let samples = data.samples;
@@ -60,38 +49,17 @@ function optionChanged(inputValue) {
     };
 
     Plotly.newPlot("bubble", bubs, bLayout)
-    // console.log(trace)
-    let meta = data.metadata;
+        let meta = data.metadata;
     let filterMeta = (meta) => meta.id == inputValue;
     let subMeta = meta.filter(filterMeta);
-    // subMeta = subMeta[0];
-    console.log(subMeta);
-
-    d3.select('thead')
-      .selectAll('th')
-      .data(Object.keys(subMeta[0]))
-      .join('th')
-      .text(d => d)
-
+    
     d3.select('tbody')
       .selectAll('tr')
       .data(subMeta)
       .join('tr')
-      .text(d => d)
-      .selectAll('td')
-      .data(d => Object.values(d))
-      .join('td')
+      .selectAll('tr')
+      .data(d => Object.entries(d))
+      .join('tr')
       .text(i => i);
-    // document.getElementById('sample-metadata').innerHTML = JSON.stringify(subMeta);
   });
 };
-    
-const placeholder= 940
-
-
-
-
-// var subject =(d3.json('samples.json')).filter(filterSubject)
-
-// d3.json('samples.json').then(function(data) {
-//      let 
