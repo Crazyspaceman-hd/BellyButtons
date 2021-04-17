@@ -75,3 +75,5 @@ function optionChanged(inputValue) {
       .text(i => i);
   });
 };
+
+optionChanged(940);
