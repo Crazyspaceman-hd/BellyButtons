@@ -10,14 +10,14 @@ d3.json('samples.json').then(data => {
         .text(data => data.id)
     })
 
-// d3.json('samples.json').then(data => {
-//     let samples = data.samples;
-//     const filterSub = (samples) => samples.id == inputValue;
-//     let filteredSub = samples.filter(filterSub);
-//     console.log(filteredSub);
-// })
 
 
+
+// function createCharts(dataset, value) {
+//   console.log(dataset);
+//   console.log(value);
+//   // Create Charts Here!
+// }
 function optionChanged(inputValue) {
   d3.json('samples.json').then(data => {
     let samples = data.samples;
@@ -42,9 +42,6 @@ function optionChanged(inputValue) {
       orientation: 'h'
     }
     let plotData = [trace]
-    console.log(value)
-    console.log(label)
-    // console.log()
     let layout = {};
     Plotly.newPlot("bar", plotData, layout);
 
@@ -67,16 +64,30 @@ function optionChanged(inputValue) {
     let meta = data.metadata;
     let filterMeta = (meta) => meta.id == inputValue;
     let subMeta = meta.filter(filterMeta);
-    subMeta = subMeta[0]
-    console.log(subMeta)
-    for (const thing in subMeta){
-      d3.select(".panel-body").text(`${thing}: ${subMeta[thing]} ${br}`);
-    }
-    // d3.select(".panel-body").text(JSON.stringify(subMeta, null, 2));
+    // subMeta = subMeta[0];
+    console.log(subMeta);
 
-})
-}
+    d3.select('thead')
+      .selectAll('th')
+      .data(Object.keys(subMeta[0]))
+      .join('th')
+      .text(d => d)
+
+    d3.select('tbody')
+      .selectAll('tr')
+      .data(subMeta)
+      .join('tr')
+      .text(d => d)
+      .selectAll('td')
+      .data(d => Object.values(d))
+      .join('td')
+      .text(i => i);
+    // document.getElementById('sample-metadata').innerHTML = JSON.stringify(subMeta);
+  });
+};
+    
 const placeholder= 940
+
 
 
 
@@ -84,18 +95,3 @@ const placeholder= 940
 
 // d3.json('samples.json').then(function(data) {
 //      let 
-let form=d3.select("#selDataset")
-
-
-
-
-
-
-
-  function unpack(rows, index) {
-    return rows.map(function(row) {
-      return row[index];
-    });
-  }
-
-
